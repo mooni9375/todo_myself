@@ -42,11 +42,33 @@ function App() {
     setTodos([newTodo, ...todos]);
   };
 
+  const onUpdate = (targetId) => {
+    // todos State의 값을 중, targetId와 일치하는 id의 아이템의 isDone 변경
+
+    // 인수 : todos 배열에서, targetId와 일치하는 id의 요소에서 isDone만 변경한 새로운 배열
+    setTodos(
+      todos.map((todo) =>
+        todo.id === targetId ? { ...todo, isDone: !todo.isDone } : todo,
+      ),
+    );
+    // setTodos(
+    //   todos.map((todo) => {
+    //     if (todo.id === targetId) {
+    //       return {
+    //         ...todo,
+    //         isDone: !todo.isDone,
+    //       };
+    //     }
+    //     return todo;
+    //   }),
+    // );
+  };
+
   return (
     <div className="App">
       <Header />
       <Editor onCreate={onCreate} />
-      <List todos={todos} />
+      <List todos={todos} onUpdate={onUpdate} />
     </div>
   );
 }

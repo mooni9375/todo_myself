@@ -2,7 +2,7 @@ import "./List.css";
 import TodoItem from "./TodoItem";
 import { useState } from "react";
 
-const List = ({ todos }) => {
+const List = ({ todos, onUpdate }) => {
   const [search, setSearch] = useState("");
 
   const onChangeSearch = (e) => {
@@ -30,7 +30,7 @@ const List = ({ todos }) => {
       <div className="todos_wrapper">
         {/* 리스트 형태로 랜더링 된 컴포넌트들이나 요소들을 서로 구분할 때 'key' props로 구분 */}
         {filteredTodos.map((todo) => {
-          return <TodoItem key={todo.id} {...todo} />;
+          return <TodoItem key={todo.id} {...todo} onUpdate={onUpdate} />;
         })}
       </div>
     </div>
