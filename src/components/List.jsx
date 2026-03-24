@@ -1,6 +1,6 @@
 import "./List.css";
 import TodoItem from "./TodoItem";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 
 const List = ({ todos, onUpdate, onDelete }) => {
   const [search, setSearch] = useState("");
@@ -19,9 +19,40 @@ const List = ({ todos, onUpdate, onDelete }) => {
   // 리랜더링 될 때마다 호출
   const filteredTodos = getFilteredData();
 
+  // const getAnalyzedData = () => {
+  //   console.log("getAnalyzedData is Called...");
+  //   const totalCount = todos.length;
+  //   const doneCount = todos.filter((todo) => todo.isDone).length;
+  //   const notDoneCount = totalCount - doneCount;
+
+  //   return {
+  //     totalCount,
+  //     doneCount,
+  //     notDoneCount,
+  //   };
+  // };
+
+  // const { totalCount, doneCount, notDoneCount } = getAnalyzedData();
+
+  const { totalCount, doneCount, notDoneCount } = useMemo(() => {
+    console.log("getAnalyzedData is Called...");
+    const totalCount = todos.length;
+    const doneCount = todos.filter((todo) => todo.isDone).length;
+    const notDoneCount = totalCount - doneCount;
+
+    return {
+      totalCount,
+      doneCount,
+      notDoneCount,
+    };
+  }, [todos]); // deps(todos)의 값이 변경될 때마다 useMemo의 첫 번째 인자인 콜백함수가 실행되고, 결과를 리턴.
+
   return (
     <div className="List">
       <h4>Todo List 🌱</h4>
+      <div>total: {totalCount}</div>
+      <div>done: {doneCount}</div>
+      <div>notDone: {notDoneCount}</div>
       <input
         value={search}
         onChange={onChangeSearch}
