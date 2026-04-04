@@ -1,8 +1,11 @@
 import "./List.css";
 import TodoItem from "./TodoItem";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useContext } from "react";
+import { TodoStateContext, TodoDispatchContext } from "../App.jsx";
 
-const List = ({ todos, onUpdate, onDelete }) => {
+const List = () => {
+  const todos = useContext(TodoStateContext);
+  const { onUpdate, onDelete } = useContext(TodoDispatchContext);
   const [search, setSearch] = useState("");
 
   const onChangeSearch = (e) => {
